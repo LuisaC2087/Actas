@@ -1,27 +1,13 @@
-<<<<<<< HEAD
-import React, { useState, useEffect } from 'react';
-=======
 import React, { useState, useEffect, useRef } from 'react';
->>>>>>> 297472af8e12e84d3684b1250b4750fefd47f9e3
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 const API_URL = 'http://localhost:3000';
 
-<<<<<<< HEAD
-/**
- * Vista para gestionar colaboradores: listado, edición sencilla y eliminación.
- */
-=======
->>>>>>> 297472af8e12e84d3684b1250b4750fefd47f9e3
 export default function GestionColaboradores({ token }) {
   const [colaboradores, setColaboradores] = useState([]);
   const [editing, setEditing] = useState(null);
   const [editData, setEditData] = useState({});
-<<<<<<< HEAD
-  const navigate = useNavigate();
-
-=======
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const modalRef = useRef(null);
@@ -33,7 +19,6 @@ export default function GestionColaboradores({ token }) {
   };
 
   // Obtener colaboradores
->>>>>>> 297472af8e12e84d3684b1250b4750fefd47f9e3
   useEffect(() => {
     fetchColaboradores();
   }, []);
@@ -49,32 +34,6 @@ export default function GestionColaboradores({ token }) {
     }
   };
 
-<<<<<<< HEAD
-  const handleEdit = (colaborador) => {
-    setEditing(colaborador._id);
-    setEditData({
-      nombre: colaborador.nombre || '',
-      apellido: colaborador.apellido || '',
-      telefono: colaborador.telefono || '',
-      correo: colaborador.correo || '',
-      cargo: colaborador.cargo || ''
-    });
-  };
-
-  const saveEdit = async (id) => {
-    try {
-      await axios.put(`${API_URL}/api/colaboradores/${id}`, editData, {
-        headers: { Authorization: token }
-      });
-      alert('Colaborador actualizado');
-      setEditing(null);
-      fetchColaboradores();
-    } catch (err) {
-      alert('Error al actualizar colaborador');
-    }
-  };
-
-=======
   // Abrir modal con datos
   const handleEdit = (col) => {
     setEditing(col._id);
@@ -123,7 +82,6 @@ export default function GestionColaboradores({ token }) {
   };
 
   // Eliminar colaborador
->>>>>>> 297472af8e12e84d3684b1250b4750fefd47f9e3
   const deleteColaborador = async (id) => {
     if (!window.confirm('¿Seguro de eliminar?')) return;
     try {
@@ -149,11 +107,8 @@ export default function GestionColaboradores({ token }) {
             Volver al Panel
           </button>
         </div>
-<<<<<<< HEAD
-=======
 
         {/* Tabla */}
->>>>>>> 297472af8e12e84d3684b1250b4750fefd47f9e3
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50">
             <tr>
@@ -168,72 +123,6 @@ export default function GestionColaboradores({ token }) {
             {colaboradores.map((c) => (
               <tr key={c._id} className="border-b">
                 <td className="px-4 py-2">{c.identificacion}</td>
-<<<<<<< HEAD
-                <td className="px-4 py-2">
-                  {editing === c._id ? (
-                    <>
-                      <input
-                        className="border p-1 mr-1 rounded"
-                        value={editData.nombre}
-                        onChange={e => setEditData({ ...editData, nombre: e.target.value })}
-                      />
-                      <input
-                        className="border p-1 rounded"
-                        value={editData.apellido}
-                        onChange={e => setEditData({ ...editData, apellido: e.target.value })}
-                      />
-                    </>
-                  ) : (
-                    `${c.nombre} ${c.apellido}`
-                  )}
-                </td>
-                <td className="px-4 py-2">
-                  {editing === c._id ? (
-                    <input
-                      className="border p-1 rounded"
-                      value={editData.telefono}
-                      onChange={e => setEditData({ ...editData, telefono: e.target.value })}
-                    />
-                  ) : (
-                    c.telefono
-                  )}
-                </td>
-                <td className="px-4 py-2">
-                  {editing === c._id ? (
-                    <input
-                      className="border p-1 rounded"
-                      value={editData.correo}
-                      onChange={e => setEditData({ ...editData, correo: e.target.value })}
-                    />
-                  ) : (
-                    c.correo
-                  )}
-                </td>
-                <td className="px-4 py-2">
-                  {editing === c._id ? (
-                    <button
-                      className="bg-green-500 hover:bg-green-600 text-white px-2 py-1 rounded"
-                      onClick={() => saveEdit(c._id)}
-                    >
-                      Guardar
-                    </button>
-                  ) : (
-                    <>
-                      <button
-                        className="bg-yellow-500 hover:bg-yellow-600 text-white px-2 py-1 rounded mr-2"
-                        onClick={() => handleEdit(c)}
-                      >
-                        Editar
-                      </button>
-                      <button
-                        className="bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded"
-                        onClick={() => deleteColaborador(c._id)}
-                      >
-                        Eliminar
-                      </button>
-                    </>
-                  )}
-=======
                 <td className="px-4 py-2">{c.nombre} {c.apellido}</td>
                 <td className="px-4 py-2">{c.telefono}</td>
                 <td className="px-4 py-2">{c.correo}</td>
@@ -250,18 +139,11 @@ export default function GestionColaboradores({ token }) {
                   >
                     Eliminar
                   </button>
->>>>>>> 297472af8e12e84d3684b1250b4750fefd47f9e3
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
-<<<<<<< HEAD
-      </div>
-    </div>
-  );
-}
-=======
 
         {/* Modal de edición */}
         {editing && (
@@ -305,4 +187,3 @@ export default function GestionColaboradores({ token }) {
     </div>
   );
 }
->>>>>>> 297472af8e12e84d3684b1250b4750fefd47f9e3
