@@ -6,13 +6,7 @@ import './GestionActivos.css';
 
 const API_URL = 'http://localhost:3000';
 
-/**
- * Vista para gestionar activos. Permite editar y eliminar activos
- * existentes. No cubre la creación porque los activos suelen
- * registrarse a través de otras herramientas (por ejemplo, un script o
- * la propia BD).
- */
-export default function GestionActivos({ token }) {
+export default function GestionActivos({ token, setToken }) {
   const [activos, setActivos] = useState([]);
   const [editing, setEditing] = useState(null);
   const [editData, setEditData] = useState({});
@@ -124,119 +118,124 @@ export default function GestionActivos({ token }) {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 p-8">
-      <div className="w-full max-w-6xl bg-white p-6 rounded shadow">
-        <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-bold text-indigo-600">Gestión de Activos</h2>
-          <button
-            onClick={() => navigate('/dashboard')}
-            className="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded font-semibold"
-          >
-            Volver al Panel
-          </button>
-        </div>
-        <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-gray-50">
-            <tr>
-              <th className="px-4 py-2 text-left text-sm font-semibold text-gray-700">Tipo</th>
-              <th className="px-4 py-2 text-left text-sm font-semibold text-gray-700">Marca</th>
-              <th className="px-4 py-2 text-left text-sm font-semibold text-gray-700">Modelo</th>
-              <th className="px-4 py-2 text-left text-sm font-semibold text-gray-700">Serial</th>
-              <th className="px-4 py-2 text-left text-sm font-semibold text-gray-700">Estado</th>
-              <th className="px-4 py-2 text-left text-sm font-semibold text-gray-700">Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            {activos.map(a => (
-              <tr key={a._id} className="border-b">
-                <td className="px-4 py-2">
-                  {editing === a._id ? (
-                    <input
-                      className="border p-1 rounded"
-                      value={editData.tipo}
-                      onChange={e => setEditData({ ...editData, tipo: e.target.value })}
-                    />
-                  ) : (
-                    a.tipo
-                  )}
-                </td>
-                <td className="px-4 py-2">
-                  {editing === a._id ? (
-                    <input
-                      className="border p-1 rounded"
-                      value={editData.marca}
-                      onChange={e => setEditData({ ...editData, marca: e.target.value })}
-                    />
-                  ) : (
-                    a.marca
-                  )}
-                </td>
-                <td className="px-4 py-2">
-                  {editing === a._id ? (
-                    <input
-                      className="border p-1 rounded"
-                      value={editData.modelo}
-                      onChange={e => setEditData({ ...editData, modelo: e.target.value })}
-                    />
-                  ) : (
-                    a.modelo
-                  )}
-                </td>
-                <td className="px-4 py-2">
-                  {editing === a._id ? (
-                    <input
-                      className="border p-1 rounded"
-                      value={editData.serial}
-                      onChange={e => setEditData({ ...editData, serial: e.target.value })}
-                    />
-                  ) : (
-                    a.serial
-                  )}
-                </td>
-                <td className="px-4 py-2">
-                  {editing === a._id ? (
-                    <select
-                      className="border p-1 rounded"
-                      value={editData.estado}
-                      onChange={e => setEditData({ ...editData, estado: e.target.value })}
-                    >
-                      <option value="Disponible">Disponible</option>
-                      <option value="Asignado">Asignado</option>
-                      <option value="Dañado">Dañado</option>
-                    </select>
-                  ) : (
-                    a.estado
-                  )}
-                </td>
-                <td className="px-4 py-2">
-                  {editing === a._id ? (
-                    <button
-                      className="bg-green-500 hover:bg-green-600 text-white px-2 py-1 rounded"
-                      onClick={() => saveEdit(a._id)}
-                    >
-                      Guardar
-                    </button>
-                  ) : (
-                    <>
-                      <button
-                        className="bg-yellow-500 hover:bg-yellow-600 text-white px-2 py-1 rounded mr-2"
-                        onClick={() => handleEdit(a)}
-                      >
-                        Editar
-                      </button>
-                      <button
-                        className="bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded"
-                        onClick={() => deleteActivo(a._id)}
-                      >
-                        Eliminar
-                      </button>
-                    </>
-                  )}
-                </td>
+    <div>
+      <Navbar setToken={setToken} />
+      <div className="gestion-activos-container">
+        <div className="gestion-activos-card">
+          <div className="gestion-activos-header">
+            <h2 className="gestion-activos-title">Gestión de Activos</h2>
+            <button
+              onClick={() => navigate('/dashboard')}
+              className="btn btn-back"
+            >
+              Volver al Panel
+            </button>
+          </div>
+
+          <table className="gestion-activos-table">
+            <thead>
+              <tr>
+                <th>Tipo</th>
+                <th>Marca</th>
+                <th>Modelo</th>
+                <th>Serial</th>
+                <th>Estado</th>
+                <th>Acciones</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {activos.map(a => (
+                <tr key={a._id}>
+                  <td>
+                    {editing === a._id ? (
+                      <input
+                        className="gestion-activos-input"
+                        value={editData.tipo}
+                        onChange={e => setEditData({ ...editData, tipo: e.target.value })}
+                      />
+                    ) : (
+                      a.tipo
+                    )}
+                  </td>
+                  <td>
+                    {editing === a._id ? (
+                      <input
+                        className="gestion-activos-input"
+                        value={editData.marca}
+                        onChange={e => setEditData({ ...editData, marca: e.target.value })}
+                      />
+                    ) : (
+                      a.marca
+                    )}
+                  </td>
+                  <td>
+                    {editing === a._id ? (
+                      <input
+                        className="gestion-activos-input"
+                        value={editData.modelo}
+                        onChange={e => setEditData({ ...editData, modelo: e.target.value })}
+                      />
+                    ) : (
+                      a.modelo
+                    )}
+                  </td>
+                  <td>
+                    {editing === a._id ? (
+                      <input
+                        className="gestion-activos-input"
+                        value={editData.serial}
+                        onChange={e => setEditData({ ...editData, serial: e.target.value })}
+                      />
+                    ) : (
+                      a.serial
+                    )}
+                  </td>
+                  <td>
+                    {editing === a._id ? (
+                      <select
+                        className="gestion-activos-select"
+                        value={editData.estado}
+                        onChange={e => setEditData({ ...editData, estado: e.target.value })}
+                      >
+                        <option value="Disponible">Disponible</option>
+                        <option value="Asignado">Asignado</option>
+                        <option value="Dañado">Dañado</option>
+                      </select>
+                    ) : (
+                      a.estado
+                    )}
+                  </td>
+                  <td className="acciones">
+                    {editing === a._id ? (
+                      <button
+                        className="btn-save"
+                        onClick={() => saveEdit(a._id)}
+                        disabled={loading}
+                      >
+                        Guardar
+                      </button>
+                    ) : (
+                      <>
+                        <button
+                          className="btn-edit"
+                          onClick={() => handleEdit(a)}
+                        >
+                          <span className='mingcute--pencil-3-line'></span>
+                        </button>
+                        <button
+                          className="btn-delete"
+                          onClick={() => deleteActivo(a._id)}
+                        >
+                          <span className="wpf--full-trash"></span>
+                        </button>
+                      </>
+                    )}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

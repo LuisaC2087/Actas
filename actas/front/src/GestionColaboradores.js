@@ -98,6 +98,8 @@ export default function GestionColaboradores({ token, setToken }) {
   };
 
   return (
+    <div>
+      <Navbar setToken={setToken} />
     <div className="min-h-screen flex items-center justify-center bg-gray-100 p-8">
       <div className="w-full max-w-5xl bg-white p-6 rounded shadow">
         <div className="flex justify-between items-center mb-6">

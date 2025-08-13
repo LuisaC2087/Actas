@@ -34,6 +34,7 @@ export default function App() {
             <Route path="/gestion-inventario" element={<GestionInventario token={token} />} /> 
             <Route path="/historial" element={<HistorialMovimientos token={token} />} /> 
             <Route path="/insertar-inventario" element={<InsertarInventario token={token} />} />
+            <Route path="/GestionInventario" element={<GestionInventario token={token} />} />
             <Route path="*" element={<Navigate to="/dashboard" />} />
           </>
         ) : (
