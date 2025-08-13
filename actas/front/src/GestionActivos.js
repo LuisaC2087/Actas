@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Navbar from './Navbar';
+import './GestionActivos.css';
 
 const API_URL = 'http://localhost:3000';
 
@@ -75,37 +76,37 @@ export default function GestionActivos({ token, setToken }) {
   return (
     <div>
       <Navbar setToken={setToken}/>
-      <div className="min-h-screen flex items-center justify-center bg-gray-100 p-8 pt-24">
-        <div className="w-full max-w-6xl bg-white p-6 rounded shadow">
-          <div className="flex justify-between items-center mb-6">
-            <h2 className="text-2xl font-bold text-indigo-600">Gestión de Activos</h2>
+      <div className="gestion-activos-container">
+        <div className="gestion-activos-card">
+          <div className="gestion-activos-header">
+            <h2 className="gestion-activos-title">Gestión de Activos</h2>
             <button
               onClick={() => navigate('/dashboard')}
-              className="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded font-semibold"
+              className="btn btn-back"
             >
               Volver al Panel
             </button>
           </div>
 
-          <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
+          <table className="gestion-activos-table">
+            <thead>
               <tr>
-                <th className="px-4 py-2 text-left text-sm font-semibold text-gray-700">Tipo</th>
-                <th className="px-4 py-2 text-left text-sm font-semibold text-gray-700">Marca</th>
-                <th className="px-4 py-2 text-left text-sm font-semibold text-gray-700">Modelo</th>
-                <th className="px-4 py-2 text-left text-sm font-semibold text-gray-700">Serial</th>
-                <th className="px-4 py-2 text-left text-sm font-semibold text-gray-700">Estado</th>
-                <th className="px-4 py-2 text-left text-sm font-semibold text-gray-700">Acciones</th>
+                <th>Tipo</th>
+                <th>Marca</th>
+                <th>Modelo</th>
+                <th>Serial</th>
+                <th>Estado</th>
+                <th>Acciones</th>
               </tr>
             </thead>
 
             <tbody>
               {activos.map(a => (
-                <tr key={a._id} className="border-b">
-                  <td className="px-4 py-2">
+                <tr key={a._id}>
+                  <td>
                     {editing === a._id ? (
                       <input
-                        className="border p-1 rounded"
+                        className="gestion-activos-input"
                         value={editData.tipo}
                         onChange={e => setEditData({ ...editData, tipo: e.target.value })}
                       />
@@ -113,10 +114,10 @@ export default function GestionActivos({ token, setToken }) {
                       a.tipo
                     )}
                   </td>
-                  <td className="px-4 py-2">
+                  <td>
                     {editing === a._id ? (
                       <input
-                        className="border p-1 rounded"
+                        className="gestion-activos-input"
                         value={editData.marca}
                         onChange={e => setEditData({ ...editData, marca: e.target.value })}
                       />
@@ -124,10 +125,10 @@ export default function GestionActivos({ token, setToken }) {
                       a.marca
                     )}
                   </td>
-                  <td className="px-4 py-2">
+                  <td>
                     {editing === a._id ? (
                       <input
-                        className="border p-1 rounded"
+                        className="gestion-activos-input"
                         value={editData.modelo}
                         onChange={e => setEditData({ ...editData, modelo: e.target.value })}
                       />
@@ -135,10 +136,10 @@ export default function GestionActivos({ token, setToken }) {
                       a.modelo
                     )}
                   </td>
-                  <td className="px-4 py-2">
+                  <td>
                     {editing === a._id ? (
                       <input
-                        className="border p-1 rounded"
+                        className="gestion-activos-input"
                         value={editData.serial}
                         onChange={e => setEditData({ ...editData, serial: e.target.value })}
                       />
@@ -146,10 +147,10 @@ export default function GestionActivos({ token, setToken }) {
                       a.serial
                     )}
                   </td>
-                  <td className="px-4 py-2">
+                  <td>
                     {editing === a._id ? (
                       <select
-                        className="border p-1 rounded"
+                        className="gestion-activos-select"
                         value={editData.estado}
                         onChange={e => setEditData({ ...editData, estado: e.target.value })}
                       >
@@ -161,28 +162,31 @@ export default function GestionActivos({ token, setToken }) {
                       a.estado
                     )}
                   </td>
-                  <td className="px-4 py-2">
+                  <td>
                     {editing === a._id ? (
                       <button
-                        className="bg-green-500 hover:bg-green-600 text-white px-2 py-1 rounded"
+                        className="btn btn-save"
                         onClick={() => saveEdit(a._id)}
                       >
                         Guardar
                       </button>
                     ) : (
                       <>
+                      <div className='acciones'>
                         <button
-                          className="bg-yellow-500 hover:bg-yellow-600 text-white px-2 py-1 rounded mr-2"
+                          className="btn btn-edit"
+                          style={{ marginRight: '0.5rem' }}
                           onClick={() => handleEdit(a)}
                         >
-                          Editar
+                          <span className='mingcute--pencil-3-line '></span>
                         </button>
                         <button
-                          className="bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded"
+                          className="btn btn-delete"
                           onClick={() => deleteActivo(a._id)}
                         >
-                          Eliminar
+                          <span className="wpf--full-trash"></span>
                         </button>
+                      </div>
                       </>
                     )}
                   </td>

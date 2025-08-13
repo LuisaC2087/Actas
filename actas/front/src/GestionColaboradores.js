@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Navbar from './Navbar';
+import './GestionColaboradores.css'
 
 const API_URL = 'http://localhost:3000';
 
@@ -97,51 +98,44 @@ export default function GestionColaboradores({ token, setToken }) {
   };
 
   return (
-    <div>
-      <Navbar setToken={setToken}/>
-      <div className="min-h-screen flex items-center justify-center bg-gray-100 p-8">
-      <div className="w-full max-w-5xl bg-white p-6 rounded shadow">
-        <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-bold text-yellow-600">Gestión de Colaboradores</h2>
-          <button
-            onClick={() => navigate('/dashboard')}
-            className="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded font-semibold"
-          >
+  <div>
+    <Navbar setToken={setToken}/>
+    <div className="page-container">
+      <div className="card">
+        <div className="card-header">
+          <h2 className="title">Gestión de Colaboradores</h2>
+          <button onClick={() => navigate('/dashboard')} className="btn-back">
             Volver al Panel
           </button>
         </div>
 
         {/* Tabla */}
-        <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-gray-50">
+        <table className="tabla">
+          <thead>
             <tr>
-              <th className="px-4 py-2 text-left text-sm font-semibold text-gray-700">Identificación</th>
-              <th className="px-4 py-2 text-left text-sm font-semibold text-gray-700">Nombre</th>
-              <th className="px-4 py-2 text-left text-sm font-semibold text-gray-700">Teléfono</th>
-              <th className="px-4 py-2 text-left text-sm font-semibold text-gray-700">Correo</th>
-              <th className="px-4 py-2 text-left text-sm font-semibold text-gray-700">Acciones</th>
+              <th>Identificación</th>
+              <th>Nombre</th>
+              <th>Teléfono</th>
+              <th>Correo</th>
+              <th>Acciones</th>
             </tr>
           </thead>
           <tbody>
             {colaboradores.map((c) => (
-              <tr key={c._id} className="border-b">
-                <td className="px-4 py-2">{c.identificacion}</td>
-                <td className="px-4 py-2">{c.nombre} {c.apellido}</td>
-                <td className="px-4 py-2">{c.telefono}</td>
-                <td className="px-4 py-2">{c.correo}</td>
-                <td className="px-4 py-2">
-                  <button
-                    className="bg-yellow-500 hover:bg-yellow-600 text-white px-2 py-1 rounded mr-2"
-                    onClick={() => handleEdit(c)}
-                  >
-                    Editar
-                  </button>
-                  <button
-                    className="bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded"
-                    onClick={() => deleteColaborador(c._id)}
-                  >
-                    Eliminar
-                  </button>
+              <tr key={c._id}>
+                <td>{c.identificacion}</td>
+                <td>{c.nombre} {c.apellido}</td>
+                <td>{c.telefono}</td>
+                <td>{c.correo}</td>
+                <td>
+                  <div className="acciones">
+                    <button className="btn-edit" onClick={() => handleEdit(c)}>
+                      <span className='mingcute--pencil-3-line '></span>
+                    </button>
+                    <button className="btn-delete" onClick={() => deleteColaborador(c._id)}>
+                      <span className="wpf--full-trash"></span>
+                    </button>
+                  </div>
                 </td>
               </tr>
             ))}
@@ -150,44 +144,34 @@ export default function GestionColaboradores({ token, setToken }) {
 
         {/* Modal de edición */}
         {editing && (
-          <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
-            <div className="bg-white p-6 rounded-lg shadow-lg w-[500px]" ref={modalRef}>
-              <h2 className="text-lg font-bold mb-4">Editar Colaborador</h2>
-              {Object.keys(editData).map((field) => (
-                <div key={field} className="mb-2">
-                  <label className="block capitalize">
-                    {field.replace("_", " ")}:
-                  </label>
-                  <input
-                    type={field.includes("fecha") ? "date" : "text"}
-                    value={editData[field]}
-                    onChange={(e) =>
-                      setEditData({ ...editData, [field]: e.target.value })
-                    }
-                    className="border p-1 w-full rounded"
-                  />
-                </div>
-              ))}
-              <div className="flex justify-end gap-2 mt-4">
-                <button
-                  onClick={saveEdit}
-                  disabled={loading}
-                  className="bg-green-500 text-white px-4 py-2 rounded"
-                >
+          <div className="modal-overlay">
+            <div className="modal" ref={modalRef}>
+              <h2>Editar Colaborador</h2>
+              <div className="form-grid">
+                {Object.keys(editData).map((field) => (
+                  <div key={field} className="form-group">
+                    <label>{field.replace("_", " ")}:</label>
+                    <input
+                      type={field.includes("fecha") ? "date" : "text"}
+                      value={editData[field]}
+                      onChange={(e) =>
+                        setEditData({ ...editData, [field]: e.target.value })
+                      }
+                    />
+                  </div>
+                ))}
+              </div>
+              <div className="modal-actions">
+                <button onClick={saveEdit} disabled={loading} className="btn-save">
                   {loading ? "Guardando..." : "Guardar"}
                 </button>
-                <button
-                  onClick={closeModal}
-                  className="bg-gray-300 px-4 py-2 rounded"
-                >
-                  Cancelar
-                </button>
+                <button onClick={closeModal} className="btn-cancel">Cancelar</button>
               </div>
             </div>
           </div>
         )}
       </div>
     </div>
-    </div>
-  );
+  </div>
+);
 }
