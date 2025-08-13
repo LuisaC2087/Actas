@@ -17,14 +17,31 @@ export default function App() {
       <Routes>
         {/* Ruta principal: muestra el formulario de login */}
         <Route path="/" element={<Login setToken={setToken} />} />
+
         {/* Si el usuario está autenticado renderizamos las rutas protegidas */}
         {token ? (
           <>
-            <Route path="/dashboard" element={<Dashboard token={token} setToken={setToken} />} />
-            <Route path="/asignar" element={<AsignarActivo token={token} />} />
-            <Route path="/insertar" element={<InsertarColaborador token={token} />} />
-            <Route path="/gestion-colaboradores" element={<GestionColaboradores token={token} />} />
-            <Route path="/gestion-activos" element={<GestionActivos token={token} />} />
+            <Route
+              path="/dashboard"
+              element={<Dashboard token={token} setToken={setToken} />}
+            />
+            <Route
+              path="/asignar"
+              element={<AsignarActivo token={token} setToken={setToken} />}
+            />
+            <Route
+              path="/insertar"
+              element={<InsertarColaborador token={token} setToken={setToken} />}
+            />
+            <Route
+              path="/gestion-colaboradores"
+              element={<GestionColaboradores token={token} setToken={setToken} />}
+            />
+            <Route
+              path="/gestion-activos"
+              element={<GestionActivos token={token} setToken={setToken} />}
+            />
+
             {/* Ruta por defecto para usuarios autenticados */}
             <Route path="*" element={<Navigate to="/dashboard" />} />
           </>

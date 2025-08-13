@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import Navbar from './Navbar';
+import './AsignarActivo.css'
 
 const API_URL = 'http://localhost:3000';
 
@@ -8,7 +10,7 @@ const API_URL = 'http://localhost:3000';
  * Vista para asignar un activo a un colaborador. Permite seleccionar un
  * colaborador y un activo disponible y realiza la petición al servidor.
  */
-export default function AsignarActivo({ token }) {
+export default function AsignarActivo({ token, setToken }) {
   const [colaboradores, setColaboradores] = useState([]);
   const [activos, setActivos] = useState([]);
   const [formData, setFormData] = useState({ colaboradorId: '', activoId: '' });
@@ -79,56 +81,59 @@ export default function AsignarActivo({ token }) {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="bg-white p-8 rounded shadow-md w-full max-w-2xl">
-        <h2 className="text-2xl font-bold mb-6 text-center text-green-600">Asignar Activo</h2>
-        {loading ? (
-          <p className="text-center text-gray-500">Cargando datos...</p>
-        ) : (
-          <>
-            {colaboradores.length === 0 && (
-              <p className="mb-2 text-red-500">No hay colaboradores registrados. Cree uno antes de asignar activos.</p>
-            )}
-            <select
-              className="w-full border rounded p-3 mb-4"
-              value={formData.colaboradorId}
-              onChange={e => setFormData({ ...formData, colaboradorId: e.target.value })}
-            >
-              <option value="">Seleccionar colaborador</option>
-              {colaboradores.map(c => (
-                <option key={c._id} value={c._id}>
-                  {c.nombre} {c.apellido} ({c.identificacion})
-                </option>
-              ))}
-            </select>
-            <select
-              className="w-full border rounded p-3 mb-4"
-              value={formData.activoId}
-              onChange={e => setFormData({ ...formData, activoId: e.target.value })}
-            >
-              <option value="">Seleccionar activo disponible</option>
-              {activos.map(a => (
-                <option key={a._id} value={a._id}>
-                  {a.tipo} - {a.marca} {a.modelo} {a.serial ? `(${a.serial})` : ''} {a.es_desechable ? '(Desechable)' : ''}
-                </option>
-              ))}
-            </select>
-            <div className="flex gap-4">
-              <button
-                onClick={asignarActivo}
-                className="bg-green-600 hover:bg-green-700 text-white px-4 py-3 w-full rounded font-semibold"
+    <div>
+      <Navbar setToken={setToken}/>
+      <div className="asignar-container">
+        <div className="asignar-card">
+          <h2 className="asignar-title">Asignar Activo</h2>
+          {loading ? (
+            <p className="loading-text">Cargando datos...</p>
+          ) : (
+            <>
+              {colaboradores.length === 0 && (
+                <p className="warning-text">No hay colaboradores registrados. Cree uno antes de asignar activos.</p>
+              )}
+              <select
+                className="select-full"
+                value={formData.colaboradorId}
+                onChange={e => setFormData({ ...formData, colaboradorId: e.target.value })}
               >
-                Asignar Activo
-              </button>
-              <button
-                onClick={() => navigate('/dashboard')}
-                className="bg-gray-500 hover:bg-gray-600 text-white px-4 py-3 w-full rounded font-semibold"
+                <option value="">Seleccionar colaborador</option>
+                {colaboradores.map(c => (
+                  <option key={c._id} value={c._id}>
+                    {c.nombre} {c.apellido} ({c.identificacion})
+                  </option>
+                ))}
+              </select>
+              <select
+                className="select-full"
+                value={formData.activoId}
+                onChange={e => setFormData({ ...formData, activoId: e.target.value })}
               >
-                Cancelar
-              </button>
-            </div>
-          </>
-        )}
+                <option value="">Seleccionar activo disponible</option>
+                {activos.map(a => (
+                  <option key={a._id} value={a._id}>
+                    {a.tipo} - {a.marca} {a.modelo} {a.serial ? `(${a.serial})` : ''} {a.es_desechable ? '(Desechable)' : ''}
+                  </option>
+                ))}
+              </select>
+              <div className="button-group">
+                <button
+                  onClick={asignarActivo}
+                  className="button-full button-assign"
+                >
+                  Asignar Activo
+                </button>
+                <button
+                  onClick={() => navigate('/dashboard')}
+                  className="button-full button-cancel"
+                >
+                  Cancelar
+                </button>
+              </div>
+            </>
+          )}
+        </div>
       </div>
     </div>
   );

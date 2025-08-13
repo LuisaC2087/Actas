@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import Navbar from './Navbar';
 
 const API_URL = 'http://localhost:3000';
 
-export default function GestionColaboradores({ token }) {
+export default function GestionColaboradores({ token, setToken }) {
   const [colaboradores, setColaboradores] = useState([]);
   const [editing, setEditing] = useState(null);
   const [editData, setEditData] = useState({});
@@ -96,7 +97,9 @@ export default function GestionColaboradores({ token }) {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 p-8">
+    <div>
+      <Navbar setToken={setToken}/>
+      <div className="min-h-screen flex items-center justify-center bg-gray-100 p-8">
       <div className="w-full max-w-5xl bg-white p-6 rounded shadow">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-bold text-yellow-600">Gestión de Colaboradores</h2>
@@ -184,6 +187,7 @@ export default function GestionColaboradores({ token }) {
           </div>
         )}
       </div>
+    </div>
     </div>
   );
 }
