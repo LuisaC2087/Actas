@@ -8,9 +8,12 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-mongoose.connect('mongodb://10.24.0.4:27017/actas', {
-}).then(() => console.log('Conectado a MongoDB')).catch(err => console.error(err));
+// 📌 Conexión a MongoDB
+mongoose.connect('mongodb://10.24.0.4:27017/actas')
+  .then(() => console.log('Conectado a MongoDB'))
+  .catch(err => console.error(err));
 
+// 📌 MODELOS
 const UsuarioSchema = new mongoose.Schema({
     username: String,
     password: String,
@@ -52,20 +55,18 @@ const ColaboradorSchema = new mongoose.Schema({
     fecha_retiro: Date,
     activos_asignados: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Activo' }]
 });
-
-// 👇 Fuerza el uso de la colección exacta "Colaboradores"
 const Colaborador = mongoose.model('Colaborador', ColaboradorSchema, 'Colaboradores');
 
-app.post('/api/login', async (req, res) => {
-    const { username, password } = req.body;
-    const user = await Usuario.findOne({ username });
-    if (!user) return res.status(401).json({ error: 'Usuario no encontrado' });
-    if (password !== user.password) return res.status(401).json({ error: 'Contraseña incorrecta' });
-
-    const token = jwt.sign({ id: user._id, rol: user.rol }, process.env.JWT_SECRET, { expiresIn: '8h' });
-    res.json({ token, nombre: user.nombre_completo, rol: user.rol });
+// 📌 Nuevo Modelo: Inventario
+const InventarioSchema = new mongoose.Schema({
+    nombre: String,
+    cantidad: Number,
+    ubicacion: String,
+    observaciones: String
 });
+const Inventario = mongoose.model('Inventario', InventarioSchema);
 
+// 📌 Middleware Auth
 function auth(req, res, next) {
     const token = req.headers['authorization'];
     if (!token) return res.status(401).json({ error: 'Token requerido' });
@@ -76,6 +77,18 @@ function auth(req, res, next) {
     });
 }
 
+// 📌 LOGIN
+app.post('/api/login', async (req, res) => {
+    const { username, password } = req.body;
+    const user = await Usuario.findOne({ username });
+    if (!user) return res.status(401).json({ error: 'Usuario no encontrado' });
+    if (password !== user.password) return res.status(401).json({ error: 'Contraseña incorrecta' });
+
+    const token = jwt.sign({ id: user._id, rol: user.rol }, process.env.JWT_SECRET, { expiresIn: '8h' });
+    res.json({ token, nombre: user.nombre_completo, rol: user.rol });
+});
+
+// 📌 RUTAS Colaboradores
 app.post('/api/colaboradores', auth, async (req, res) => {
     try {
         const nuevo = new Colaborador(req.body);
@@ -95,6 +108,7 @@ app.get('/api/colaboradores', auth, async (req, res) => {
     }
 });
 
+// 📌 RUTAS Activos
 app.post('/api/activos', auth, async (req, res) => {
     const activo = new Activo(req.body);
     await activo.save();
@@ -106,6 +120,7 @@ app.get('/api/activos', auth, async (req, res) => {
     res.json(activos);
 });
 
+// 📌 Asignar Activo
 app.post('/api/asignar', auth, async (req, res) => {
     const { colaboradorId, activoId } = req.body;
     const activo = await Activo.findById(activoId);
@@ -123,5 +138,82 @@ app.post('/api/asignar', auth, async (req, res) => {
     res.json({ mensaje: 'Activo asignado', activo, colaborador });
 });
 
+// 📌 CRUD Inventario
+app.post('/api/inventario', auth, async (req, res) => {
+    try {
+        const nuevoItem = new Inventario(req.body);
+        await nuevoItem.save();
+        res.json(nuevoItem);
+    } catch (err) {
+        res.status(400).json({ error: 'Error al crear ítem de inventario' });
+    }
+});
+
+app.get('/api/inventario', auth, async (req, res) => {
+    try {
+        const inventario = await Inventario.find();
+        res.json(inventario);
+    } catch (err) {
+        res.status(500).json({ error: 'Error al obtener inventario' });
+    }
+});
+
+app.put('/api/inventario/:id', auth, async (req, res) => {
+    try {
+        const actualizado = await Inventario.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        res.json(actualizado);
+    } catch (err) {
+        res.status(400).json({ error: 'Error al actualizar inventario' });
+    }
+});
+
+app.delete('/api/inventario/:id', auth, async (req, res) => {
+    try {
+        await Inventario.findByIdAndDelete(req.params.id);
+        res.json({ mensaje: 'Ítem eliminado del inventario' });
+    } catch (err) {
+        res.status(500).json({ error: 'Error al eliminar ítem de inventario' });
+    }
+});
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Servidor corriendo en puerto ${PORT}`));
+
+const Movimiento = mongoose.model('Movimiento', MovimientoSchema);
+
+// 📌 CRUD Movimientos
+app.post('/api/movimientos', auth, async (req, res) => {
+    try {
+        const nuevoMovimiento = new Movimiento({
+            ...req.body,
+            usuario: req.user.id // guarda quién lo registró
+        });
+        await nuevoMovimiento.save();
+        res.json(nuevoMovimiento);
+    } catch (err) {
+        res.status(400).json({ error: 'Error al crear movimiento' });
+    }
+});
+
+app.get('/api/movimientos', auth, async (req, res) => {
+    try {
+        const movimientos = await Movimiento.find()
+            .populate('activo')
+            .populate('inventario')
+            .populate('colaborador')
+            .populate('usuario', 'nombre_completo');
+        res.json(movimientos);
+    } catch (err) {
+        res.status(500).json({ error: 'Error al obtener movimientos' });
+    }
+});
+
+app.delete('/api/movimientos/:id', auth, async (req, res) => {
+    try {
+        await Movimiento.findByIdAndDelete(req.params.id);
+        res.json({ mensaje: 'Movimiento eliminado' });
+    } catch (err) {
+        res.status(500).json({ error: 'Error al eliminar movimiento' });
+    }
+});
+

@@ -16,11 +16,13 @@ export default function Navbar({ setToken }) {
 
   return (
     <nav className='navbar'>
-      <div className='navbar-links'>
+      <div className='navbar-links flex flex-wrap gap-2'>
         <button onClick={() => navigate('/asignar')}>Asignar Equipo</button>
         <button onClick={() => navigate('/insertar')}>Insertar Nuevo Colaborador</button>
         <button onClick={() => navigate('/gestion-colaboradores')}>Gestionar Colaboradores</button>
         <button onClick={() => navigate('/gestion-activos')}>Gestionar Activos</button>
+        <button onClick={() => navigate('/gestion-inventario')}>Gestionar Inventario</button>
+        <button onClick={() => navigate('/historial')}>Historial de Movimientos</button>
         <button onClick={handleViewActa}>Ver Acta PDF</button>
       </div>
 

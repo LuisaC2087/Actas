@@ -13,7 +13,11 @@ app.use(express.json());
 const activosRoutes = require('./routes/activos');
 const colaboradoresRoutes = require('./routes/colaboradores');
 const authRoutes = require('./routes/auth');
+const inventarioRoutes = require('./routes/inventario');
+const movimientoRoutes = require('./routes/movimiento');
 
+app.use('/api/movimiento', movimientoRoutes);
+app.use('/api/inventario', inventarioRoutes);
 app.use('/api/activos', activosRoutes);
 app.use('/api/colaboradores', colaboradoresRoutes);
 app.use('/api/login', authRoutes);

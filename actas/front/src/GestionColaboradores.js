@@ -98,13 +98,20 @@ export default function GestionColaboradores({ token, setToken }) {
   };
 
   return (
-  <div>
-    <Navbar setToken={setToken}/>
-    <div className="page-container">
-      <div className="card">
-        <div className="card-header">
-          <h2 className="title">Gestión de Colaboradores</h2>
-          <button onClick={() => navigate('/dashboard')} className="btn-back">
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 p-8">
+      <div className="w-full max-w-5xl bg-white p-6 rounded shadow">
+        <div className="flex justify-between items-center mb-6">
+          <h2 className="text-2xl font-bold text-yellow-600">Gestión de Colaboradores</h2>
+          <button
+            onClick={() => navigate('/insertar')}
+            className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded font-semibold"
+          >
+            Nuevo Colaborador
+          </button>
+          <button
+            onClick={() => navigate('/dashboard')}
+            className="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded font-semibold"
+          >
             Volver al Panel
           </button>
         </div>
