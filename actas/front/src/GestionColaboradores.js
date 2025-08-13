@@ -101,6 +101,12 @@ export default function GestionColaboradores({ token }) {
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-bold text-yellow-600">Gestión de Colaboradores</h2>
           <button
+            onClick={() => navigate('/insertar')}
+            className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded font-semibold"
+          >
+            Nuevo Colaborador
+          </button>
+          <button
             onClick={() => navigate('/dashboard')}
             className="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded font-semibold"
           >
