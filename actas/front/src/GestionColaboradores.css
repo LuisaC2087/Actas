@@ -55,7 +55,7 @@
 
 .tabla th {
   font-weight: 600;
-  color: #374151;
+  color: rgb(238, 114, 3);
   background-color: #f9fafb;
 }
 
@@ -206,4 +206,8 @@
 
 .btn-cancel:hover{
     background-color: rgb(100, 99, 99);;
+}
+
+h2{
+  color: rgb(238, 114, 3);
 }
