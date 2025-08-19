@@ -1,0 +1,80 @@
+.insertar-container {
+  min-height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f3f4f6; 
+}
+
+.insertar-card {
+  max-width: 768px;
+  margin: 0 auto;
+  background-color: #fff;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  width: 100%;
+}
+
+.insertar-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  color: rgb(89, 53, 140); 
+}
+
+.insertar-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.insertar-label {
+  display: block;
+  margin-bottom: 0.25rem;
+  font-weight: 600;
+}
+
+.insertar-input {
+  border: 1px solid #d1d5db;
+  padding: 0.75rem;
+  width: 100%;
+  border-radius: 4px;
+}
+
+.insertar-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.btn-guardar {
+  background-color: rgb(11, 187, 239);
+  color: #fff;
+  padding: 0.75rem 1rem;
+  width: 100%;
+  border-radius: 4px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-guardar:hover {
+  background-color: rgb(0, 103, 177);
+}
+
+.btn-volver {
+  background-color: rgb(157, 157, 156);
+  color: #fff;
+  padding: 0.75rem 1rem;
+  width: 100%;
+  border-radius: 4px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-volver:hover {
+  background-color: rgb(100, 99, 99);
+}

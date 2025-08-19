@@ -22,7 +22,6 @@ export default function Navbar({ setToken }) {
         <button onClick={() => navigate('/gestion-colaboradores')}>Gestionar Colaboradores</button>
         <button onClick={() => navigate('/gestion-activos')}>Gestionar Activos</button>
         <button onClick={() => navigate('/gestion-inventario')}>Gestionar Inventario</button>
-        <button onClick={() => navigate('/historial')}>Historial de Movimientos</button>
         <button onClick={handleViewActa}>Ver Acta PDF</button>
       </div>
 

@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import './HistorialMovimientos.css';
 
-const API_URL = 'http://localhost:3000'; // Cambia al puerto/backend que uses
+const API_URL = 'http://localhost:3000';
 
 export default function HistorialMovimientos({ token }) {
   const [movimientos, setMovimientos] = useState([]);
@@ -13,17 +14,18 @@ export default function HistorialMovimientos({ token }) {
 
   useEffect(() => {
     fetchMovimientos();
-  }, []);
+  }, [token]);
 
   const fetchMovimientos = async () => {
     setLoading(true);
     setError(null);
     try {
       const res = await axios.get(`${API_URL}/api/movimientos`, {
-        headers: { Authorization: token }
+        headers: { Authorization: `Bearer ${token}` }
       });
       setMovimientos(res.data);
     } catch (err) {
+      console.error(err);
       setError('Error al cargar movimientos');
     } finally {
       setLoading(false);
@@ -31,51 +33,45 @@ export default function HistorialMovimientos({ token }) {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center bg-gray-100 p-8">
-      <div className="w-full max-w-7xl bg-white p-6 rounded shadow">
-        <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-bold text-yellow-600">Historial de Movimientos</h2>
-          <button
-            onClick={() => navigate('/dashboard')}
-            className="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded font-semibold"
-          >
-            Volver al Panel
-          </button>
+    <div className="historial-container">
+      <div className="historial-box">
+        <div className="historial-header">
+          <h2 className="historial-title">Historial de Movimientos</h2>
         </div>
 
         {loading && <p>Cargando movimientos...</p>}
-        {error && <p className="text-red-600">{error}</p>}
+        {error && <p className="text-red">{error}</p>}
         {!loading && movimientos.length === 0 && <p>No hay movimientos registrados.</p>}
 
         {!loading && movimientos.length > 0 && (
-          <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
+          <table className="historial-table">
+            <thead>
               <tr>
-                <th className="px-4 py-2 text-left text-sm font-semibold text-gray-700">Tipo Movimiento</th>
-                <th className="px-4 py-2 text-left text-sm font-semibold text-gray-700">Activo / Inventario</th>
-                <th className="px-4 py-2 text-left text-sm font-semibold text-gray-700">Cantidad</th>
-                <th className="px-4 py-2 text-left text-sm font-semibold text-gray-700">Responsable</th>
-                <th className="px-4 py-2 text-left text-sm font-semibold text-gray-700">Realizado por</th>
-                <th className="px-4 py-2 text-left text-sm font-semibold text-gray-700">Fecha</th>
-                <th className="px-4 py-2 text-left text-sm font-semibold text-gray-700">Observaciones</th>
+                <th>Tipo Movimiento</th>
+                <th>Activo / Inventario</th>
+                <th>Cantidad</th>
+                <th>Responsable</th>
+                <th>Realizado por</th>
+                <th>Fecha</th>
+                <th>Observaciones</th>
               </tr>
             </thead>
             <tbody>
               {movimientos.map((mov) => (
-                <tr key={mov._id} className="border-b">
-                  <td className="px-4 py-2">{mov.tipo_movimiento}</td>
-                  <td className="px-4 py-2">
+                <tr key={mov._id}>
+                  <td>{mov.tipo_movimiento}</td>
+                  <td>
                     {mov.activo
                       ? `${mov.activo.marca} ${mov.activo.modelo} (S/N: ${mov.activo.serial})`
                       : mov.item_inventario
                       ? mov.item_inventario.nombre
                       : '—'}
                   </td>
-                  <td className="px-4 py-2">{mov.cantidad || 1}</td>
-                  <td className="px-4 py-2">{mov.responsable ? mov.responsable.nombre : '—'}</td>
-                  <td className="px-4 py-2">{mov.realizado_por ? mov.realizado_por.nombre : '—'}</td>
-                  <td className="px-4 py-2">{new Date(mov.fecha).toLocaleString()}</td>
-                  <td className="px-4 py-2">{mov.observaciones || '—'}</td>
+                  <td>{mov.cantidad || 1}</td>
+                  <td>{mov.responsable ? mov.responsable.nombre : '—'}</td>
+                  <td>{mov.realizado_por ? mov.realizado_por.nombre : '—'}</td>
+                  <td>{new Date(mov.fecha).toLocaleString()}</td>
+                  <td>{mov.observaciones || '—'}</td>
                 </tr>
               ))}
             </tbody>
