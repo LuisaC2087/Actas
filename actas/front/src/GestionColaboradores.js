@@ -56,6 +56,10 @@ export default function GestionColaboradores({ token, setToken }) {
     });
   };
 
+   const handleViewActa = () => {
+    window.open('http://localhost:3000/api/acta/pdf', '_blank');
+  };
+
   // Guardar cambios
   const saveEdit = async () => {
     if (!editData.identificacion || !editData.nombre || !editData.apellido) {
@@ -138,6 +142,7 @@ export default function GestionColaboradores({ token, setToken }) {
                     <button className="btn-delete" onClick={() => deleteColaborador(c._id)}>
                       <span className="wpf--full-trash"></span>
                     </button>
+                    <button className='btn-acta' onClick={handleViewActa}>Acta</button>
                   </div>
                 </td>
               </tr>

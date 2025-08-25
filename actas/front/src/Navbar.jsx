@@ -10,10 +10,6 @@ export default function Navbar({ setToken }) {
     navigate('/');
   };
 
-  const handleViewActa = () => {
-    window.open('http://localhost:3000/api/acta/pdf', '_blank');
-  };
-
   return (
     <nav className='navbar'>
       <div className='navbar-links flex flex-wrap gap-2'>
@@ -22,7 +18,6 @@ export default function Navbar({ setToken }) {
         <button onClick={() => navigate('/gestion-colaboradores')}>Gestionar Colaboradores</button>
         <button onClick={() => navigate('/gestion-activos')}>Gestionar Activos</button>
         <button onClick={() => navigate('/gestion-inventario')}>Gestionar Inventario</button>
-        <button onClick={handleViewActa}>Ver Acta PDF</button>
       </div>
 
       <div className='navbar-logout'>

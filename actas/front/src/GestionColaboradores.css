@@ -208,6 +208,22 @@
     background-color: rgb(100, 99, 99);;
 }
 
+.btn-acta {
+  background-color: rgb(11, 157, 239);
+  color: white;
+  padding: 0.4rem 1rem;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  border: 1px solid rgb(11, 157, 239);
+  font-weight: bold;
+}
+
+.btn-acta:hover {
+  background-color: white;
+  color: rgb(11, 157, 239);
+  border: 1px solid rgb(11, 157, 239);
+}
+
 h2{
   color: rgb(238, 114, 3);
 }
