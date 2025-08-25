@@ -22,7 +22,7 @@ app.use('/api/inventario', inventarioRoutes);
 app.use('/api/activos', activosRoutes);
 app.use('/api/colaboradores', colaboradoresRoutes);
 app.use('/api/login', authRoutes);
-app.use('/api/acta', actasRoutes);
+app.use('/api/acta', require('./routes/actas'));
 
 
 mongoose.connect(process.env.MONGODB_URI)

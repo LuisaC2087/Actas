@@ -198,23 +198,23 @@
             <tbody>
                 <tr>
                     <td class="label">IDENTIFICACIÓN:</td>
-                    <td class="value">{{colaborador.identificacion}}</td>
+                    <td class="value">1053617083</td>
                     <td class="label">NOMBRE</td>
-                    <td class="value">{{colaborador.nombre}}</td>
+                    <td class="value">Daniela Valentina</td>
                     <td class="label">APELLIDO</td>
-                    <td class="value">{{colaborador.apellido}}</td>
+                    <td class="value">Galvis Mojica</td>
                 </tr>
                 <tr>
                     <td class="label">PROYECTO O DEPENDENCIA / ÁREA:</td>
-                    <td class="value">{{colaborador.proyecto}}</td>
+                    <td class="value">NUEVA EPS PRESTACIONES ECONÓMICAS</td>
                     <td class="label">CARGO:</td>
-                    <td class="value">{{colaborador.cargo}}</td>  
+                    <td class="value">Auxiliar de operaciones</td>  
                 </tr>
                 <tr>
                     <td class="label">FECHA DE ENTREGA O DEVOLUCIÓN:</td>
-                    <td class="value">{{colaborador.fecha_ingreso}}</td>
+                    <td class="value">2025-07-16</td>
                     <td class="label">ESTADO DEL EQUIPO:</td>
-                    <td class="value">{{estadoEquipo}}</td>
+                    <td class="value"></td>
                 </tr>
             </tbody>
         </table>
@@ -227,19 +227,19 @@
             <tbody>
                 <tr>
                     <td class="label">TIPO DE EQUIPO:</td>
-                    <td class="value">{{activo.tipo}}</td>
+                    <td class="value"></td>
                     <td class="label">SERIAL:</td>
-                    <td class="value">{{activo.serial}}</td>
+                    <td class="value"></td>
                 </tr>
                 <tr>
                     <td class="label">MARCA:</td>
-                    <td class="value">{{activo.marca}}</td>
+                    <td class="value"></td>
                     <td class="label">MODELO:</td>
-                    <td class="value">{{activo.modelo}}</td>
+                    <td class="value"></td>
                 </tr>
                 <tr>
                     <td class="label">COMPONENTES:</td>
-                    <td class="value" colspan="3">{{activo.componentes}}</td>
+                    <td class="value" colspan="3"></td>
                 </tr>
             </tbody>
         </table>
@@ -256,15 +256,6 @@
                 </tr>
             </thead>
             <tbody>
-                {{#each componentes}}
-                <tr>
-                    <td class="centered">{{this.item}}</td>
-                    <td>{{this.nombre}}</td>
-                    <td>{{this.marca}}</td>
-                    <td>{{this.serial}}</td>
-                    <td>{{this.capacidad}}</td>
-                </tr>
-                {{/each}}
             </tbody>
         </table>
 
@@ -280,15 +271,6 @@
                 </tr>
             </thead>
             <tbody>
-                {{#each perifericos}}
-                <tr>
-                    <td class="centered">{{this.item}}</td>
-                    <td>{{this.nombre}}</td>
-                    <td>{{this.marca}}</td>
-                    <td>{{this.serial}}</td>
-                    <td>{{this.observacion}}</td>
-                </tr>
-                {{/each}}
             </tbody>
         </table>
         
@@ -304,15 +286,6 @@
                 </tr>
             </thead>
             <tbody>
-                {{#each software}}
-                <tr>
-                    <td class="centered">{{this.item}}</td>
-                    <td>{{this.nombre}}</td>
-                    <td>{{this.version}}</td>
-                    <td>{{this.licencia}}</td>
-                    <td>{{this.observacion}}</td>
-                </tr>
-                {{/each}}
             </tbody>
         </table>
 
@@ -324,7 +297,7 @@
             <tbody>
                 <tr>
                     <td>
-                        <div class="observations">{{observacionesGenerales}}</div>
+                        <div class="observations"></div>
                     </td>
                 </tr>
             </tbody>
@@ -353,27 +326,27 @@
         <!-- Galería de Fotos -->
         <div class="photo-gallery">
             <div class="photo-item">
-                <img src="{{fotos.superior}}" alt="Vista Superior">
+                <img src="" alt="Vista Superior">
                 <p>Vista Superior</p>
             </div>
             <div class="photo-item">
-                <img src="{{fotos.frontal}}" alt="Vista Frontal">
+                <img src="" alt="Vista Frontal">
                 <p>Vista Frontal</p>
             </div>
             <div class="photo-item">
-                <img src="{{fotos.pantalla}}" alt="Pantalla Encendida">
+                <img src="" alt="Pantalla Encendida">
                 <p>Pantalla</p>
             </div>
             <div class="photo-item">
-                <img src="{{fotos.teclado}}" alt="Teclado">
+                <img src="" alt="Teclado">
                 <p>Teclado</p>
             </div>
             <div class="photo-item">
-                <img src="{{fotos.lateralIzquierdo}}" alt="Lateral Izquierdo">
+                <img src="" alt="Lateral Izquierdo">
                 <p>Lateral Izquierdo</p>
             </div>
             <div class="photo-item">
-                <img src="{{fotos.lateralDerecho}}" alt="Lateral Derecho">
+                <img src="" alt="Lateral Derecho">
                 <p>Lateral Derecho</p>
             </div>
         </div>
@@ -386,15 +359,15 @@
             <tbody>
                 <tr>
                     <td class="label">Estado de la carcasa:</td>
-                    <td class="value">{{chequeo.carcasa}}</td>
+                    <td class="value"></td>
                     <td class="label">Estado de la pantalla:</td>
-                    <td class="value">{{chequeo.pantalla}}</td>
+                    <td class="value"></td>
                 </tr>
                  <tr>
                     <td class="label">Estado del teclado:</td>
-                    <td class="value">{{chequeo.teclado}}</td>
+                    <td class="value"></td>
                     <td class="label">Estado del touchpad:</td>
-                    <td class="value">{{chequeo.touchpad}}</td>
+                    <td class="value"></td>
                 </tr>
             </tbody>
         </table>
@@ -422,15 +395,15 @@
         <div class="signatures">
             <div class="signature-box">
                 <strong>Firma del colaborador:</strong>
-                <p>Nombre: {{colaborador.nombreCompleto}}</p>
-                <p>N° Documento: {{colaborador.identificacion}}</p>
-                <p>Fecha de recibido: {{fechaEntrega}}</p>
+                <p>Nombre: </p>
+                <p>N° Documento: 1053617083</p>
+                <p>Fecha de recibido: </p>
             </div>
             <div class="signature-box">
                 <strong>Firma de quien entrega o recibe en la empresa:</strong>
-                <p>Nombre: {{entrega.nombre}}</p>
-                <p>N° Documento: {{entrega.identificacion}}</p>
-                <p>Cargo: {{entrega.cargo}}</p>
+                <p>Nombre: </p>
+                <p>N° Documento: </p>
+                <p>Cargo: </p>
             </div>
         </div>
 
@@ -459,9 +432,9 @@
             <tbody>
                 <tr>
                     <td class="label">TIPO DE EQUIPO:</td>
-                    <td class="value">{{equipo.tipo}}</td>
+                    <td class="value"></td>
                     <td class="label">SERIAL:</td>
-                    <td class="value">{{equipo.serial}}</td>
+                    <td class="value"></td>
                 </tr>
             </tbody>
         </table>
@@ -477,13 +450,6 @@
                 </tr>
             </thead>
             <tbody>
-                {{#each controlDeCambios}}
-                <tr>
-                    <td class="centered">{{this.fecha}}</td>
-                    <td class="centered">{{this.version}}</td>
-                    <td>{{this.descripcion}}</td>
-                </tr>
-                {{/each}}
             </tbody>
         </table>
 
