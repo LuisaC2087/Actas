@@ -1,0 +1,52 @@
+<html>
+<head>
+  <style>
+    body { font-family: Arial, sans-serif; font-size: 12px; }
+    h1 { text-align: center; background: #333; color: white; padding: 10px; }
+    table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+    td, th { border: 1px solid #000; padding: 5px; }
+    .section-title { background: #ddd; font-weight: bold; text-align: center; }
+  </style>
+</head>
+<body>
+  <h1>ACTA DE ENTREGA / DEVOLUCIÓN DE EQUIPOS</h1>
+
+  <table>
+    <tr><th colspan="4" class="section-title">DATOS DEL COLABORADOR</th></tr>
+    <tr><td>Nombre</td><td>{{colaborador.nombre}} {{colaborador.apellido}}</td><td>Identificación</td><td>{{colaborador.identificacion}}</td></tr>
+    <tr><td>Proyecto</td><td>{{colaborador.proyecto}}</td><td>Cargo</td><td>{{colaborador.cargo}}</td></tr>
+    <tr><td>Área</td><td>{{colaborador.area_dependencia}}</td><td>Extensión</td><td>{{colaborador.extension_telefonica}}</td></tr>
+    <tr><td>Fecha Ingreso</td><td>{{colaborador.fecha_ingreso}}</td><td>Fecha Retiro</td><td>{{colaborador.fecha_retiro}}</td></tr>
+  </table>
+
+  <table>
+    <tr><th colspan="5" class="section-title">DETALLE DE ACTIVOS ASIGNADOS</th></tr>
+    <tr>
+      <th>Tipo</th>
+      <th>Marca</th>
+      <th>Modelo</th>
+      <th>Serial</th>
+      <th>Activo Fijo</th>
+    </tr>
+    {{#each activos}}
+      <tr>
+        <td>{{this.tipo}}</td>
+        <td>{{this.marca}}</td>
+        <td>{{this.modelo}}</td>
+        <td>{{this.serial}}</td>
+        <td>{{this.activo_fijo}}</td>
+      </tr>
+    {{/each}}
+  </table>
+
+  <p>
+    Certifico que los elementos descritos en el presente documento fueron entregados en buen estado...
+  </p>
+
+  <br><br>
+  <table>
+    <tr><th>Firma Colaborador</th><th>Firma Técnico</th></tr>
+    <tr><td>________________</td><td>________________</td></tr>
+  </table>
+</body>
+</html>
