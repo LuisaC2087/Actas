@@ -13,6 +13,7 @@ app.use(express.json());
 const activosRoutes = require('./routes/activos');
 const colaboradoresRoutes = require('./routes/colaboradores');
 const authRoutes = require('./routes/auth');
+const actasRoutes = require("./routes/actas");
 const inventarioRoutes = require('./routes/inventario');
 const movimientoRoutes = require('./routes/movimiento');
 
@@ -21,6 +22,8 @@ app.use('/api/inventario', inventarioRoutes);
 app.use('/api/activos', activosRoutes);
 app.use('/api/colaboradores', colaboradoresRoutes);
 app.use('/api/login', authRoutes);
+app.use('/api/acta', actasRoutes);
+
 
 mongoose.connect(process.env.MONGODB_URI)
   .then(() => {

@@ -46,13 +46,16 @@ router.get("/:idColaborador", async (req, res) => {
     const pdf = await page.pdf({ format: "A4", printBackground: true });
     await browser.close();
 
-    res.contentType("application/pdf");
-    res.send(pdf);
+    // ✅ Enviar correctamente el PDF
+    res.setHeader("Content-Type", "application/pdf");
+    res.setHeader("Content-Disposition", "inline; filename=acta.pdf");
+    res.end(pdf);
 
   } catch (error) {
     console.error("Error generando acta:", error);
     res.status(500).json({ error: "Error generando acta" });
   }
 });
+
 
 module.exports = router;
